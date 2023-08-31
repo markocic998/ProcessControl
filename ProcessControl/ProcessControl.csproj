@@ -8,4 +8,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Opc.UaFx.Client" Version="2.32.0" />
+    <PackageReference Include="ScottPlot.WinForms" Version="4.1.67" />
+  </ItemGroup>
+
 </Project>
