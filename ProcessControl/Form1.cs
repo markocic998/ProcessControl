@@ -6,10 +6,22 @@ namespace ProcessControl
     public partial class Form1 : Form
     {
         private OpcClient client;
+        private int bottleNumber = 0;
 
         public Form1()
         {
             InitializeComponent();
+            InitializePictureBoxControls();
+        }
+
+        private void InitializePictureBoxControls()
+        {
+            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            path.AddEllipse(0, 0, picFillingSilos.Width, picFillingSilos.Height);
+            picFillingSilos.Region = new Region(path);
+            picStopFillingSilos.Region = new Region(path);
+            picFillingBottles.Region = new Region(path);
+            picStopFillingBottles.Region = new Region(path);
         }
 
         private void btnConnectDisconnect_Click(object sender, EventArgs e)
@@ -17,10 +29,12 @@ namespace ProcessControl
             if (btnConnectDisconnect.Text == "Connect")
             {
                 ConnectToOPCServer();
+                DrawPlotItemRatio();
             }
             else
             {
                 DisconnectFromOPCServer();
+                ClearAllControls();
             }
         }
 
@@ -33,11 +47,39 @@ namespace ProcessControl
                 client.Connect();
                 btnConnectDisconnect.Text = "Disconnect";
                 timer.Start();
+                LoadCurrentBottleLabel();
             }
             catch (Exception e)
             {
                 MessageBox.Show("Can not connect to the OPC server:\n" + e.ToString());
             }
+        }
+
+        private void LoadCurrentBottleLabel()
+        {
+            try
+            {
+                string tag = "ns=2;s=BottleLabel";
+                var res = client.ReadNode(tag);
+                txtBottleLabel.Text = res.ToString();
+            }
+            catch (Exception ex)
+            {
+                lblServerError.Visible = true;
+            }
+        }
+
+        private void DrawPlotItemRatio()
+        {
+            double[] values = { 7, 2, 1 };
+            string[] labels = { "Water", "Color", "Flavor" };
+            Color[] colors = { Color.Blue, Color.Red, Color.Green };
+            var pie = plotItemRatio.Plot.AddPie(values);
+            pie.SliceLabels = labels;
+            pie.SliceFillColors = colors;
+            pie.ShowPercentages = true;
+            plotItemRatio.Plot.Legend();
+            plotItemRatio.Refresh();
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -47,13 +89,6 @@ namespace ProcessControl
 
         private void DisconnectFromOPCServer()
         {
-            timer.Stop();
-            plotWater.Plot.Clear();
-            plotWater.Refresh();
-            plotColor.Plot.Clear();
-            plotColor.Refresh();
-            plotFlavor.Plot.Clear();
-            plotFlavor.Refresh();
             if (client != null)
             {
                 client.Disconnect();
@@ -61,17 +96,39 @@ namespace ProcessControl
             }
         }
 
+        private void ClearAllControls()
+        {
+            timer.Stop();
+            plotWater.Plot.Clear();
+            plotWater.Refresh();
+            plotColor.Plot.Clear();
+            plotColor.Refresh();
+            plotFlavor.Plot.Clear();
+            plotFlavor.Refresh();
+            plotItemRatio.Plot.Clear();
+            plotItemRatio.Refresh();
+            picFillingSilos.Visible = false;
+            picStopFillingSilos.Visible = false;
+            picFillingBottles.Visible = false;
+            picStopFillingBottles.Visible = false;
+        }
+
         private void timer_Tick(object sender, EventArgs e)
         {
             DrawJuiceProductionItemValue("Water");
             DrawJuiceProductionItemValue("Color");
             DrawJuiceProductionItemValue("Flavor");
+            DetermineStatus("FillingSilos");
+            DetermineStatus("StopFillingSilos");
+            DetermineStatus("FillingBottles");
+            DetermineStatus("StopFillingBottles");
+            DetermineBottleNumber();
         }
 
         private void DrawJuiceProductionItemValue(string item)
         {
-            string tag = resolveTag(item);
-            FormsPlot plot = resolvePlot(item);
+            string tag = ResolveItemTag(item);
+            FormsPlot plot = ResolveItemPlot(item);
             plot.Plot.Clear();
 
             try
@@ -83,7 +140,7 @@ namespace ProcessControl
                 var bar = plot.Plot.AddBar(values);
                 bar.ShowValuesAboveBars = true;
                 bar.Font.Size = 16;
-                Color color = resolveColor(item);
+                Color color = ResolveItemColor(item);
                 bar.Font.Color = color;
                 bar.FillColor = color;
             }
@@ -98,7 +155,7 @@ namespace ProcessControl
 
         }
 
-        private string resolveTag(string item)
+        private string ResolveItemTag(string item)
         {
             switch (item)
             {
@@ -111,7 +168,7 @@ namespace ProcessControl
             }
         }
 
-        private FormsPlot resolvePlot(string item)
+        private FormsPlot ResolveItemPlot(string item)
         {
             switch (item)
             {
@@ -124,7 +181,7 @@ namespace ProcessControl
             }
         }
 
-        private Color resolveColor(string item)
+        private Color ResolveItemColor(string item)
         {
             switch (item)
             {
@@ -134,6 +191,92 @@ namespace ProcessControl
                     return Color.Red;
                 default:
                     return Color.Green;
+            }
+        }
+
+        private void DetermineStatus(string statusName)
+        {
+            PictureBox pic = ResolveStatusPictureBox(statusName);
+            try
+            {
+                string tag = ResolveStatusTag(statusName);
+                var res = client.ReadNode(tag);
+                if (bool.Parse(res.ToString()))
+                {
+                    SetPictureBoxVisibility(pic, true);
+                }
+                else
+                {
+                    SetPictureBoxVisibility(pic, false);
+                }
+            }
+            catch
+            {
+                SetPictureBoxVisibility(pic, false);
+            }
+        }
+
+        private PictureBox ResolveStatusPictureBox(string statusName)
+        {
+            switch (statusName)
+            {
+                case "FillingSilos":
+                    return picFillingSilos;
+                case "StopFillingSilos":
+                    return picStopFillingSilos;
+                case "FillingBottles":
+                    return picFillingBottles;
+                default:
+                    return picStopFillingBottles;
+            }
+        }
+
+        private string ResolveStatusTag(string statusName)
+        {
+            switch (statusName)
+            {
+                case "FillingSilos":
+                    return "ns=2;s=FillingSilos";
+                case "StopFillingSilos":
+                    return "ns=2;s=StopFillingSilos";
+                case "FillingBottles":
+                    return "ns=2;s=FillingBottles";
+                default:
+                    return "ns=2;s=StopFillingBottles";
+            }
+        }
+
+        private void SetPictureBoxVisibility(PictureBox pic, bool value)
+        {
+            pic.Visible = value;
+        }
+
+        private void DetermineBottleNumber()
+        {
+            try
+            {
+                string tag = "ns=2;s=BottleNumber";
+                var res = client.ReadNode(tag);
+                int n = int.Parse(res.ToString());
+                this.bottleNumber += n;
+                lblBottleNumber.Text = this.bottleNumber.ToString();
+            }
+            catch
+            {
+                lblBottleNumber.Text = "NaN";
+            }
+        }
+
+        private void btnBottleLabel_Click(object sender, EventArgs e)
+        {
+            if (client != null)
+            {
+                client.WriteNode("ns=2;s=BottleLabel", txtBottleLabel.Text);
+                MessageBox.Show(txtBottleLabel.Text + " as a new bottle label is set.");
+            }
+            else
+            {
+                MessageBox.Show("You are not connected to the OPC server.");
             }
         }
     }

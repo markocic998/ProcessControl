@@ -47,9 +47,29 @@
             this.plotColor = new ScottPlot.FormsPlot();
             this.plotFlavor = new ScottPlot.FormsPlot();
             this.lblServerError = new System.Windows.Forms.Label();
+            this.plotItemRatio = new ScottPlot.FormsPlot();
+            this.picFillingSilos = new System.Windows.Forms.PictureBox();
+            this.lblFillingSilos = new System.Windows.Forms.Label();
+            this.bottlePictureBox = new System.Windows.Forms.PictureBox();
+            this.lblFillingBottles = new System.Windows.Forms.Label();
+            this.picFillingBottles = new System.Windows.Forms.PictureBox();
+            this.lblStopFillingSilos = new System.Windows.Forms.Label();
+            this.picStopFillingSilos = new System.Windows.Forms.PictureBox();
+            this.lblStopFillingBottles = new System.Windows.Forms.Label();
+            this.picStopFillingBottles = new System.Windows.Forms.PictureBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lblBottleNumber = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtBottleLabel = new System.Windows.Forms.TextBox();
+            this.btnBottleLabel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.waterSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flavorSilosPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picFillingSilos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bottlePictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picFillingBottles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picStopFillingSilos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picStopFillingBottles)).BeginInit();
             this.SuspendLayout();
             // 
             // waterSilosPictureBox
@@ -166,7 +186,7 @@
             // label5
             // 
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label5.Location = new System.Drawing.Point(1267, 520);
+            this.label5.Location = new System.Drawing.Point(1172, 515);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(5, 70);
             this.label5.TabIndex = 14;
@@ -194,16 +214,178 @@
             this.lblServerError.ForeColor = System.Drawing.Color.Red;
             this.lblServerError.Location = new System.Drawing.Point(1207, 23);
             this.lblServerError.Name = "lblServerError";
-            this.lblServerError.Size = new System.Drawing.Size(205, 38);
+            this.lblServerError.Size = new System.Drawing.Size(202, 37);
             this.lblServerError.TabIndex = 17;
             this.lblServerError.Text = "Server Error";
             this.lblServerError.Visible = false;
+            // 
+            // plotItemRatio
+            // 
+            this.plotItemRatio.Location = new System.Drawing.Point(1635, 582);
+            this.plotItemRatio.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.plotItemRatio.Name = "plotItemRatio";
+            this.plotItemRatio.Size = new System.Drawing.Size(213, 211);
+            this.plotItemRatio.TabIndex = 18;
+            // 
+            // picFillingSilos
+            // 
+            this.picFillingSilos.BackColor = System.Drawing.Color.Lime;
+            this.picFillingSilos.Location = new System.Drawing.Point(822, 595);
+            this.picFillingSilos.Name = "picFillingSilos";
+            this.picFillingSilos.Size = new System.Drawing.Size(40, 40);
+            this.picFillingSilos.TabIndex = 19;
+            this.picFillingSilos.TabStop = false;
+            this.picFillingSilos.Visible = false;
+            // 
+            // lblFillingSilos
+            // 
+            this.lblFillingSilos.AutoSize = true;
+            this.lblFillingSilos.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblFillingSilos.Location = new System.Drawing.Point(868, 602);
+            this.lblFillingSilos.Name = "lblFillingSilos";
+            this.lblFillingSilos.Size = new System.Drawing.Size(137, 26);
+            this.lblFillingSilos.TabIndex = 20;
+            this.lblFillingSilos.Text = "Silos filling...";
+            // 
+            // bottlePictureBox
+            // 
+            this.bottlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("bottlePictureBox.Image")));
+            this.bottlePictureBox.Location = new System.Drawing.Point(1124, 582);
+            this.bottlePictureBox.Name = "bottlePictureBox";
+            this.bottlePictureBox.Size = new System.Drawing.Size(103, 211);
+            this.bottlePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.bottlePictureBox.TabIndex = 21;
+            this.bottlePictureBox.TabStop = false;
+            // 
+            // lblFillingBottles
+            // 
+            this.lblFillingBottles.AutoSize = true;
+            this.lblFillingBottles.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblFillingBottles.Location = new System.Drawing.Point(868, 714);
+            this.lblFillingBottles.Name = "lblFillingBottles";
+            this.lblFillingBottles.Size = new System.Drawing.Size(154, 26);
+            this.lblFillingBottles.TabIndex = 23;
+            this.lblFillingBottles.Text = "Bottles filling...";
+            // 
+            // picFillingBottles
+            // 
+            this.picFillingBottles.BackColor = System.Drawing.Color.Lime;
+            this.picFillingBottles.Location = new System.Drawing.Point(822, 707);
+            this.picFillingBottles.Name = "picFillingBottles";
+            this.picFillingBottles.Size = new System.Drawing.Size(40, 40);
+            this.picFillingBottles.TabIndex = 22;
+            this.picFillingBottles.TabStop = false;
+            this.picFillingBottles.Visible = false;
+            // 
+            // lblStopFillingSilos
+            // 
+            this.lblStopFillingSilos.AutoSize = true;
+            this.lblStopFillingSilos.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblStopFillingSilos.Location = new System.Drawing.Point(868, 648);
+            this.lblStopFillingSilos.Name = "lblStopFillingSilos";
+            this.lblStopFillingSilos.Size = new System.Drawing.Size(164, 26);
+            this.lblStopFillingSilos.TabIndex = 25;
+            this.lblStopFillingSilos.Text = "Stop silos filling";
+            // 
+            // picStopFillingSilos
+            // 
+            this.picStopFillingSilos.BackColor = System.Drawing.Color.Red;
+            this.picStopFillingSilos.Location = new System.Drawing.Point(822, 641);
+            this.picStopFillingSilos.Name = "picStopFillingSilos";
+            this.picStopFillingSilos.Size = new System.Drawing.Size(40, 40);
+            this.picStopFillingSilos.TabIndex = 24;
+            this.picStopFillingSilos.TabStop = false;
+            this.picStopFillingSilos.Visible = false;
+            // 
+            // lblStopFillingBottles
+            // 
+            this.lblStopFillingBottles.AutoSize = true;
+            this.lblStopFillingBottles.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblStopFillingBottles.Location = new System.Drawing.Point(868, 760);
+            this.lblStopFillingBottles.Name = "lblStopFillingBottles";
+            this.lblStopFillingBottles.Size = new System.Drawing.Size(183, 26);
+            this.lblStopFillingBottles.TabIndex = 27;
+            this.lblStopFillingBottles.Text = "Stop bottles filling";
+            // 
+            // picStopFillingBottles
+            // 
+            this.picStopFillingBottles.BackColor = System.Drawing.Color.Red;
+            this.picStopFillingBottles.Location = new System.Drawing.Point(822, 753);
+            this.picStopFillingBottles.Name = "picStopFillingBottles";
+            this.picStopFillingBottles.Size = new System.Drawing.Size(40, 40);
+            this.picStopFillingBottles.TabIndex = 26;
+            this.picStopFillingBottles.TabStop = false;
+            this.picStopFillingBottles.Visible = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(834, 818);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(343, 26);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Number of monitored filled bottles:";
+            // 
+            // lblBottleNumber
+            // 
+            this.lblBottleNumber.AutoSize = true;
+            this.lblBottleNumber.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblBottleNumber.Location = new System.Drawing.Point(1183, 818);
+            this.lblBottleNumber.Name = "lblBottleNumber";
+            this.lblBottleNumber.Size = new System.Drawing.Size(23, 26);
+            this.lblBottleNumber.TabIndex = 29;
+            this.lblBottleNumber.Text = "0";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(1256, 618);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(122, 26);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Bottle label:";
+            // 
+            // txtBottleLabel
+            // 
+            this.txtBottleLabel.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtBottleLabel.Location = new System.Drawing.Point(1256, 647);
+            this.txtBottleLabel.Name = "txtBottleLabel";
+            this.txtBottleLabel.Size = new System.Drawing.Size(346, 34);
+            this.txtBottleLabel.TabIndex = 31;
+            // 
+            // btnBottleLabel
+            // 
+            this.btnBottleLabel.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnBottleLabel.Location = new System.Drawing.Point(1481, 687);
+            this.btnBottleLabel.Name = "btnBottleLabel";
+            this.btnBottleLabel.Size = new System.Drawing.Size(121, 34);
+            this.btnBottleLabel.TabIndex = 32;
+            this.btnBottleLabel.Text = "Apply";
+            this.btnBottleLabel.UseVisualStyleBackColor = true;
+            this.btnBottleLabel.Click += new System.EventHandler(this.btnBottleLabel_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1882, 853);
+            this.Controls.Add(this.btnBottleLabel);
+            this.Controls.Add(this.txtBottleLabel);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblBottleNumber);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.lblStopFillingBottles);
+            this.Controls.Add(this.picStopFillingBottles);
+            this.Controls.Add(this.lblStopFillingSilos);
+            this.Controls.Add(this.picStopFillingSilos);
+            this.Controls.Add(this.lblFillingBottles);
+            this.Controls.Add(this.picFillingBottles);
+            this.Controls.Add(this.bottlePictureBox);
+            this.Controls.Add(this.lblFillingSilos);
+            this.Controls.Add(this.picFillingSilos);
+            this.Controls.Add(this.plotItemRatio);
             this.Controls.Add(this.lblServerError);
             this.Controls.Add(this.plotFlavor);
             this.Controls.Add(this.plotColor);
@@ -229,6 +411,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.waterSilosPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSilosPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flavorSilosPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picFillingSilos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bottlePictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picFillingBottles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picStopFillingSilos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picStopFillingBottles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -253,5 +440,20 @@
         private ScottPlot.FormsPlot plotColor;
         private ScottPlot.FormsPlot plotFlavor;
         private Label lblServerError;
+        private ScottPlot.FormsPlot plotItemRatio;
+        private PictureBox picFillingSilos;
+        private Label lblFillingSilos;
+        private PictureBox bottlePictureBox;
+        private Label lblFillingBottles;
+        private PictureBox picFillingBottles;
+        private Label lblStopFillingSilos;
+        private PictureBox picStopFillingSilos;
+        private Label lblStopFillingBottles;
+        private PictureBox picStopFillingBottles;
+        private Label label6;
+        private Label lblBottleNumber;
+        private Label label7;
+        private TextBox txtBottleLabel;
+        private Button btnBottleLabel;
     }
 }
