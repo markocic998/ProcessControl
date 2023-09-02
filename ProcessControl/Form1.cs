@@ -46,8 +46,9 @@ namespace ProcessControl
                 client = new OpcClient(endpoint); //txtEndpointUrl.Text
                 client.Connect();
                 btnConnectDisconnect.Text = "Disconnect";
-                timer.Start();
                 LoadCurrentBottleLabel();
+                LoadTotalNumberOfBottles();
+                timer.Start();
             }
             catch (Exception e)
             {
@@ -62,6 +63,21 @@ namespace ProcessControl
                 string tag = "ns=2;s=BottleLabel";
                 var res = client.ReadNode(tag);
                 txtBottleLabel.Text = res.ToString();
+            }
+            catch (Exception ex)
+            {
+                lblServerError.Visible = true;
+            }
+        }
+
+        private void LoadTotalNumberOfBottles()
+        {
+            try
+            {
+                string tag = "ns=2;s=TotalNumberOfBottles";
+                var res = client.ReadNode(tag);
+                this.bottleNumber = int.Parse(res.ToString());
+                lblBottleNumber.Text = res.ToString();
             }
             catch (Exception ex)
             {
@@ -258,8 +274,12 @@ namespace ProcessControl
                 string tag = "ns=2;s=BottleNumber";
                 var res = client.ReadNode(tag);
                 int n = int.Parse(res.ToString());
-                this.bottleNumber += n;
-                lblBottleNumber.Text = this.bottleNumber.ToString();
+                if (n > 0)
+                {
+                    this.bottleNumber += n;
+                    lblBottleNumber.Text = this.bottleNumber.ToString();
+                    client.WriteNode("ns=2;s=TotalNumberOfBottles", this.bottleNumber);
+                }
             }
             catch
             {

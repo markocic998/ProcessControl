@@ -186,7 +186,7 @@
             // label5
             // 
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label5.Location = new System.Drawing.Point(1172, 515);
+            this.label5.Location = new System.Drawing.Point(1130, 520);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(5, 70);
             this.label5.TabIndex = 14;
@@ -250,7 +250,7 @@
             // bottlePictureBox
             // 
             this.bottlePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("bottlePictureBox.Image")));
-            this.bottlePictureBox.Location = new System.Drawing.Point(1124, 582);
+            this.bottlePictureBox.Location = new System.Drawing.Point(1079, 582);
             this.bottlePictureBox.Name = "bottlePictureBox";
             this.bottlePictureBox.Size = new System.Drawing.Size(103, 211);
             this.bottlePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -321,17 +321,17 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(834, 818);
+            this.label6.Location = new System.Drawing.Point(1207, 585);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(343, 26);
+            this.label6.Size = new System.Drawing.Size(391, 26);
             this.label6.TabIndex = 28;
-            this.label6.Text = "Number of monitored filled bottles:";
+            this.label6.Text = "Total number of monitored filled bottles:";
             // 
             // lblBottleNumber
             // 
             this.lblBottleNumber.AutoSize = true;
             this.lblBottleNumber.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblBottleNumber.Location = new System.Drawing.Point(1183, 818);
+            this.lblBottleNumber.Location = new System.Drawing.Point(1207, 624);
             this.lblBottleNumber.Name = "lblBottleNumber";
             this.lblBottleNumber.Size = new System.Drawing.Size(23, 26);
             this.lblBottleNumber.TabIndex = 29;
@@ -341,7 +341,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(1256, 618);
+            this.label7.Location = new System.Drawing.Point(1207, 685);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(122, 26);
             this.label7.TabIndex = 30;
@@ -350,15 +350,15 @@
             // txtBottleLabel
             // 
             this.txtBottleLabel.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.txtBottleLabel.Location = new System.Drawing.Point(1256, 647);
+            this.txtBottleLabel.Location = new System.Drawing.Point(1207, 714);
             this.txtBottleLabel.Name = "txtBottleLabel";
-            this.txtBottleLabel.Size = new System.Drawing.Size(346, 34);
+            this.txtBottleLabel.Size = new System.Drawing.Size(391, 34);
             this.txtBottleLabel.TabIndex = 31;
             // 
             // btnBottleLabel
             // 
             this.btnBottleLabel.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btnBottleLabel.Location = new System.Drawing.Point(1481, 687);
+            this.btnBottleLabel.Location = new System.Drawing.Point(1477, 754);
             this.btnBottleLabel.Name = "btnBottleLabel";
             this.btnBottleLabel.Size = new System.Drawing.Size(121, 34);
             this.btnBottleLabel.TabIndex = 32;
