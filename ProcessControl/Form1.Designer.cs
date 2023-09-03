@@ -62,6 +62,12 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtBottleLabel = new System.Windows.Forms.TextBox();
             this.btnBottleLabel = new System.Windows.Forms.Button();
+            this.mainPlot = new ScottPlot.FormsPlot();
+            this.tagsListBox = new System.Windows.Forms.ListBox();
+            this.tagComboBox = new System.Windows.Forms.ComboBox();
+            this.addTagBtn = new System.Windows.Forms.Button();
+            this.removeTagBtn = new System.Windows.Forms.Button();
+            this.clearTagsBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.waterSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flavorSilosPictureBox)).BeginInit();
@@ -366,11 +372,85 @@
             this.btnBottleLabel.UseVisualStyleBackColor = true;
             this.btnBottleLabel.Click += new System.EventHandler(this.btnBottleLabel_Click);
             // 
+            // mainPlot
+            // 
+            this.mainPlot.AccessibleRole = System.Windows.Forms.AccessibleRole.Sound;
+            this.mainPlot.Location = new System.Drawing.Point(12, 360);
+            this.mainPlot.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+            this.mainPlot.Name = "mainPlot";
+            this.mainPlot.Size = new System.Drawing.Size(739, 480);
+            this.mainPlot.TabIndex = 33;
+            // 
+            // tagsListBox
+            // 
+            this.tagsListBox.FormattingEnabled = true;
+            this.tagsListBox.ItemHeight = 20;
+            this.tagsListBox.Location = new System.Drawing.Point(12, 209);
+            this.tagsListBox.Name = "tagsListBox";
+            this.tagsListBox.Size = new System.Drawing.Size(297, 144);
+            this.tagsListBox.TabIndex = 34;
+            // 
+            // tagComboBox
+            // 
+            this.tagComboBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tagComboBox.FormattingEnabled = true;
+            this.tagComboBox.Items.AddRange(new object[] {
+            "Water",
+            "Color",
+            "Flavor",
+            "BottleNumber",
+            "TotalNumberOfBottles",
+            "Temperature"});
+            this.tagComboBox.Location = new System.Drawing.Point(329, 209);
+            this.tagComboBox.Name = "tagComboBox";
+            this.tagComboBox.Size = new System.Drawing.Size(191, 30);
+            this.tagComboBox.TabIndex = 35;
+            this.tagComboBox.Text = "Choose a tag";
+            // 
+            // addTagBtn
+            // 
+            this.addTagBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.addTagBtn.Location = new System.Drawing.Point(329, 245);
+            this.addTagBtn.Name = "addTagBtn";
+            this.addTagBtn.Size = new System.Drawing.Size(191, 29);
+            this.addTagBtn.TabIndex = 36;
+            this.addTagBtn.Text = "Add";
+            this.addTagBtn.UseVisualStyleBackColor = true;
+            this.addTagBtn.Click += new System.EventHandler(this.addTagBtn_Click);
+            // 
+            // removeTagBtn
+            // 
+            this.removeTagBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.removeTagBtn.Location = new System.Drawing.Point(329, 289);
+            this.removeTagBtn.Name = "removeTagBtn";
+            this.removeTagBtn.Size = new System.Drawing.Size(191, 29);
+            this.removeTagBtn.TabIndex = 37;
+            this.removeTagBtn.Text = "Remove";
+            this.removeTagBtn.UseVisualStyleBackColor = true;
+            this.removeTagBtn.Click += new System.EventHandler(this.removeTagBtn_Click);
+            // 
+            // clearTagsBtn
+            // 
+            this.clearTagsBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.clearTagsBtn.Location = new System.Drawing.Point(329, 324);
+            this.clearTagsBtn.Name = "clearTagsBtn";
+            this.clearTagsBtn.Size = new System.Drawing.Size(191, 29);
+            this.clearTagsBtn.TabIndex = 38;
+            this.clearTagsBtn.Text = "Clear";
+            this.clearTagsBtn.UseVisualStyleBackColor = true;
+            this.clearTagsBtn.Click += new System.EventHandler(this.clearTagsBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1882, 853);
+            this.Controls.Add(this.clearTagsBtn);
+            this.Controls.Add(this.removeTagBtn);
+            this.Controls.Add(this.addTagBtn);
+            this.Controls.Add(this.tagComboBox);
+            this.Controls.Add(this.tagsListBox);
+            this.Controls.Add(this.mainPlot);
             this.Controls.Add(this.btnBottleLabel);
             this.Controls.Add(this.txtBottleLabel);
             this.Controls.Add(this.label7);
@@ -455,5 +535,11 @@
         private Label label7;
         private TextBox txtBottleLabel;
         private Button btnBottleLabel;
+        private ScottPlot.FormsPlot mainPlot;
+        private ListBox tagsListBox;
+        private ComboBox tagComboBox;
+        private Button addTagBtn;
+        private Button removeTagBtn;
+        private Button clearTagsBtn;
     }
 }

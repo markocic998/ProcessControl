@@ -1,3 +1,4 @@
+using Opc.UaFx;
 using Opc.UaFx.Client;
 using ScottPlot;
 using System.Drawing.Drawing2D;
@@ -8,6 +9,7 @@ namespace ProcessControl
     {
         private OpcClient client;
         private int totalBottleNumber = 0;
+        private List<string> tagList = new List<string>();
 
         public Form1()
         {
@@ -126,6 +128,9 @@ namespace ProcessControl
             plotItemRatio.Plot.Clear();
             plotItemRatio.Refresh();
 
+            mainPlot.Plot.Clear();
+            mainPlot.Refresh();
+
             picFillingSilos.Visible = false;
             picStopFillingSilos.Visible = false;
             picFillingBottles.Visible = false;
@@ -144,6 +149,8 @@ namespace ProcessControl
             DetermineStatus(Constants.StopFillingBottles);
 
             DetermineTotalBottleNumber();
+
+            DrawLogs();
         }
 
         private void DrawJuiceProductionItemValue(string item)
@@ -292,6 +299,45 @@ namespace ProcessControl
             }
         }
 
+        private void DrawLogs()
+        {
+            mainPlot.Plot.Clear();
+            var logs = client.ReadNodesHistory(DateTime.UtcNow.AddSeconds(-100), DateTime.UtcNow, nodeIds: DetermineNodeIds());
+
+            foreach (var log in logs)
+            {
+                List<double> values = new List<double>();
+                List<double> timestamps = new List<double>();
+                foreach (var data in log.Value)
+                {
+                    if (data.Value != null && double.TryParse(data.Value.ToString(), out double value))
+                    {
+                        values.Add(value);
+                        timestamps.Add(data.Timestamp.AddHours(Constants.TimeZoneDifference).ToOADate());
+                    }
+                }
+                if (timestamps.Count > 0)
+                {
+                    mainPlot.Plot.AddScatter(timestamps.ToArray(), values.ToArray(), label: ResolveNameFromHistoricalTag(log.Key.ToString()));
+                }
+            }
+
+            mainPlot.Plot.XAxis.DateTimeFormat(true);
+            mainPlot.Plot.Legend();
+            mainPlot.Plot.AxisAuto();
+            mainPlot.Refresh();
+        }
+
+        private OpcNodeId[] DetermineNodeIds()
+        {
+            OpcNodeId[] nodeIds = new OpcNodeId[tagList.Count];
+            for (int i = 0; i < tagList.Count; i++)
+            {
+                nodeIds[i] = tagList[i];
+            }
+            return nodeIds;
+        }
+
         private void btnBottleLabel_Click(object sender, EventArgs e)
         {
             if (client != null)
@@ -302,6 +348,96 @@ namespace ProcessControl
             else
             {
                 MessageBox.Show("You are not connected to the OPC server.");
+            }
+        }
+
+        private void clearTagsBtn_Click(object sender, EventArgs e)
+        {
+            if (tagsListBox.Items.Count > 0)
+            {
+                tagsListBox.Items.Clear();
+                tagList.Clear();
+            }
+            else
+            {
+                MessageBox.Show("There are no items to remove.");
+            }
+        }
+
+        private void removeTagBtn_Click(object sender, EventArgs e)
+        {
+            if (tagsListBox.SelectedItems.Count > 0)
+            {
+                string itemToRemove = tagsListBox.SelectedItem.ToString();
+                tagsListBox.Items.Remove(itemToRemove);
+                tagList.Remove(ResolveHistoricalTag(itemToRemove));
+            }
+            else
+            {
+                MessageBox.Show("There is no selected item.");
+            }
+        }
+
+        private void addTagBtn_Click(object sender, EventArgs e)
+        {
+            if (tagComboBox.SelectedIndex >= 0 && !isTagAlreadyAdded((string)tagComboBox.SelectedItem))
+            {
+                tagsListBox.Items.Add(tagComboBox.SelectedItem);
+                tagList.Add(ResolveHistoricalTag((string)tagComboBox.SelectedItem));
+            }
+            else
+            {
+                MessageBox.Show("Please, choose an item that is not in the list.");
+            }
+        }
+
+        private bool isTagAlreadyAdded(string item)
+        {
+            for (int i = 0; i < tagsListBox.Items.Count; i++)
+            {
+                if ((string)tagsListBox.Items[i] == item)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private string ResolveHistoricalTag(string name)
+        {
+            switch (name)
+            {
+                case Constants.Water:
+                    return Constants.WaterHistoricalTag;
+                case Constants.Color:
+                    return Constants.ColorHistoricalTag;
+                case Constants.Flavor:
+                    return Constants.FlavorHistoricalTag;
+                case Constants.BottleNumber:
+                    return Constants.BottleNumberHistoricalTag;
+                case Constants.TotalNumberOfBottles:
+                    return Constants.TotalNumberOfBottlesHistoricalTag;
+                default:
+                    return Constants.TemperatureHistoricalTag;
+            }
+        }
+
+        private string ResolveNameFromHistoricalTag(string name)
+        {
+            switch (name)
+            {
+                case Constants.WaterHistoricalTag:
+                    return Constants.Water;
+                case Constants.ColorHistoricalTag:
+                    return Constants.Color;
+                case Constants.FlavorHistoricalTag:
+                    return Constants.Flavor;
+                case Constants.BottleNumberHistoricalTag:
+                    return Constants.BottleNumber;
+                case Constants.TotalNumberOfBottlesHistoricalTag:
+                    return Constants.TotalNumberOfBottles;
+                default:
+                    return Constants.Temperature;
             }
         }
     }
