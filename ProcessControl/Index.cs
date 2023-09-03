@@ -4,6 +4,10 @@
     {
         public const int TimeZoneDifference = 2;
 
+        public const string Seconds = "Seconds";
+        public const string Minutes = "Minutes";
+        public const string Hours = "Hours";
+
         public const string Connect = "Connect";
         public const string Disconnect = "Disconnect";
 

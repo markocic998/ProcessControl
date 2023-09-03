@@ -15,6 +15,14 @@ namespace ProcessControl
         {
             InitializeComponent();
             InitializePictureBoxControls();
+            InitializeControls();
+        }
+
+        private void InitializeControls()
+        {
+            timeUnitComboBox.SelectedIndex = 0;
+            fromDateTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            toDateTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
         }
 
         private void InitializePictureBoxControls()
@@ -149,8 +157,10 @@ namespace ProcessControl
             DetermineStatus(Constants.StopFillingBottles);
 
             DetermineTotalBottleNumber();
-
-            DrawLogs();
+            if (liveModeCheckBox.Checked)
+            {
+                DrawLogs();
+            }
         }
 
         private void DrawJuiceProductionItemValue(string item)
@@ -302,7 +312,7 @@ namespace ProcessControl
         private void DrawLogs()
         {
             mainPlot.Plot.Clear();
-            var logs = client.ReadNodesHistory(DateTime.UtcNow.AddSeconds(-100), DateTime.UtcNow, nodeIds: DetermineNodeIds());
+            var logs = client.ReadNodesHistory(CalculateStartTime(), DateTime.UtcNow, nodeIds: DetermineNodeIds());
 
             foreach (var log in logs)
             {
@@ -326,6 +336,24 @@ namespace ProcessControl
             mainPlot.Plot.Legend();
             mainPlot.Plot.AxisAuto();
             mainPlot.Refresh();
+        }
+
+        private DateTime CalculateStartTime()
+        {
+            double value = double.Parse(lastXNumeric.Value.ToString());
+            if (value <= 0)
+            {
+                return DateTime.UtcNow;
+            }
+            switch (timeUnitComboBox.SelectedItem)
+            {
+                case Constants.Seconds:
+                    return DateTime.UtcNow.AddSeconds(-value);
+                case Constants.Minutes:
+                    return DateTime.UtcNow.AddMinutes(-value);
+                default:
+                    return DateTime.UtcNow.AddHours(-value);
+            }
         }
 
         private OpcNodeId[] DetermineNodeIds()
@@ -438,6 +466,24 @@ namespace ProcessControl
                     return Constants.TotalNumberOfBottles;
                 default:
                     return Constants.Temperature;
+            }
+        }
+
+        private void liveModeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (liveModeCheckBox.Checked)
+            {
+                fromDateTime.Enabled= false;
+                toDateTime.Enabled = false;
+                lastXNumeric.Enabled = true;
+                timeUnitComboBox.Enabled = true;
+            }
+            else
+            {
+                fromDateTime.Enabled = true;
+                toDateTime.Enabled = true;
+                lastXNumeric.Enabled = false;
+                timeUnitComboBox.Enabled = false;
             }
         }
     }

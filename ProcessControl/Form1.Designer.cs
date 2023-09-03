@@ -68,6 +68,14 @@
             this.addTagBtn = new System.Windows.Forms.Button();
             this.removeTagBtn = new System.Windows.Forms.Button();
             this.clearTagsBtn = new System.Windows.Forms.Button();
+            this.liveModeCheckBox = new System.Windows.Forms.CheckBox();
+            this.lastXNumeric = new System.Windows.Forms.NumericUpDown();
+            this.timeUnitComboBox = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.fromDateTime = new System.Windows.Forms.DateTimePicker();
+            this.toDateTime = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.waterSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flavorSilosPictureBox)).BeginInit();
@@ -76,6 +84,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picFillingBottles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingSilos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingBottles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lastXNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // waterSilosPictureBox
@@ -183,7 +192,7 @@
             // 
             this.lblJuiceProduction.AutoSize = true;
             this.lblJuiceProduction.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblJuiceProduction.Location = new System.Drawing.Point(1193, 82);
+            this.lblJuiceProduction.Location = new System.Drawing.Point(771, 67);
             this.lblJuiceProduction.Name = "lblJuiceProduction";
             this.lblJuiceProduction.Size = new System.Drawing.Size(234, 37);
             this.lblJuiceProduction.TabIndex = 11;
@@ -218,7 +227,7 @@
             this.lblServerError.AutoSize = true;
             this.lblServerError.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblServerError.ForeColor = System.Drawing.Color.Red;
-            this.lblServerError.Location = new System.Drawing.Point(1207, 23);
+            this.lblServerError.Location = new System.Drawing.Point(1668, 9);
             this.lblServerError.Name = "lblServerError";
             this.lblServerError.Size = new System.Drawing.Size(202, 37);
             this.lblServerError.TabIndex = 17;
@@ -375,23 +384,25 @@
             // mainPlot
             // 
             this.mainPlot.AccessibleRole = System.Windows.Forms.AccessibleRole.Sound;
-            this.mainPlot.Location = new System.Drawing.Point(12, 360);
+            this.mainPlot.Location = new System.Drawing.Point(-2, 333);
             this.mainPlot.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.mainPlot.Name = "mainPlot";
-            this.mainPlot.Size = new System.Drawing.Size(739, 480);
+            this.mainPlot.Size = new System.Drawing.Size(790, 521);
             this.mainPlot.TabIndex = 33;
             // 
             // tagsListBox
             // 
+            this.tagsListBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tagsListBox.FormattingEnabled = true;
-            this.tagsListBox.ItemHeight = 20;
-            this.tagsListBox.Location = new System.Drawing.Point(12, 209);
+            this.tagsListBox.ItemHeight = 22;
+            this.tagsListBox.Location = new System.Drawing.Point(385, 168);
             this.tagsListBox.Name = "tagsListBox";
-            this.tagsListBox.Size = new System.Drawing.Size(297, 144);
+            this.tagsListBox.Size = new System.Drawing.Size(209, 158);
             this.tagsListBox.TabIndex = 34;
             // 
             // tagComboBox
             // 
+            this.tagComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.tagComboBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tagComboBox.FormattingEnabled = true;
             this.tagComboBox.Items.AddRange(new object[] {
@@ -401,18 +412,17 @@
             "BottleNumber",
             "TotalNumberOfBottles",
             "Temperature"});
-            this.tagComboBox.Location = new System.Drawing.Point(329, 209);
+            this.tagComboBox.Location = new System.Drawing.Point(600, 168);
             this.tagComboBox.Name = "tagComboBox";
-            this.tagComboBox.Size = new System.Drawing.Size(191, 30);
+            this.tagComboBox.Size = new System.Drawing.Size(170, 30);
             this.tagComboBox.TabIndex = 35;
-            this.tagComboBox.Text = "Choose a tag";
             // 
             // addTagBtn
             // 
             this.addTagBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addTagBtn.Location = new System.Drawing.Point(329, 245);
+            this.addTagBtn.Location = new System.Drawing.Point(600, 204);
             this.addTagBtn.Name = "addTagBtn";
-            this.addTagBtn.Size = new System.Drawing.Size(191, 29);
+            this.addTagBtn.Size = new System.Drawing.Size(170, 29);
             this.addTagBtn.TabIndex = 36;
             this.addTagBtn.Text = "Add";
             this.addTagBtn.UseVisualStyleBackColor = true;
@@ -421,9 +431,9 @@
             // removeTagBtn
             // 
             this.removeTagBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.removeTagBtn.Location = new System.Drawing.Point(329, 289);
+            this.removeTagBtn.Location = new System.Drawing.Point(600, 262);
             this.removeTagBtn.Name = "removeTagBtn";
-            this.removeTagBtn.Size = new System.Drawing.Size(191, 29);
+            this.removeTagBtn.Size = new System.Drawing.Size(170, 29);
             this.removeTagBtn.TabIndex = 37;
             this.removeTagBtn.Text = "Remove";
             this.removeTagBtn.UseVisualStyleBackColor = true;
@@ -432,19 +442,123 @@
             // clearTagsBtn
             // 
             this.clearTagsBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.clearTagsBtn.Location = new System.Drawing.Point(329, 324);
+            this.clearTagsBtn.Location = new System.Drawing.Point(600, 297);
             this.clearTagsBtn.Name = "clearTagsBtn";
-            this.clearTagsBtn.Size = new System.Drawing.Size(191, 29);
+            this.clearTagsBtn.Size = new System.Drawing.Size(170, 29);
             this.clearTagsBtn.TabIndex = 38;
             this.clearTagsBtn.Text = "Clear";
             this.clearTagsBtn.UseVisualStyleBackColor = true;
             this.clearTagsBtn.Click += new System.EventHandler(this.clearTagsBtn_Click);
+            // 
+            // liveModeCheckBox
+            // 
+            this.liveModeCheckBox.AutoSize = true;
+            this.liveModeCheckBox.Checked = true;
+            this.liveModeCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.liveModeCheckBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.liveModeCheckBox.Location = new System.Drawing.Point(26, 168);
+            this.liveModeCheckBox.Name = "liveModeCheckBox";
+            this.liveModeCheckBox.Size = new System.Drawing.Size(116, 26);
+            this.liveModeCheckBox.TabIndex = 39;
+            this.liveModeCheckBox.Text = "Live mode";
+            this.liveModeCheckBox.UseVisualStyleBackColor = true;
+            this.liveModeCheckBox.CheckedChanged += new System.EventHandler(this.liveModeCheckBox_CheckedChanged);
+            // 
+            // lastXNumeric
+            // 
+            this.lastXNumeric.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lastXNumeric.Location = new System.Drawing.Point(90, 204);
+            this.lastXNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.lastXNumeric.Name = "lastXNumeric";
+            this.lastXNumeric.Size = new System.Drawing.Size(124, 30);
+            this.lastXNumeric.TabIndex = 40;
+            this.lastXNumeric.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // timeUnitComboBox
+            // 
+            this.timeUnitComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timeUnitComboBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.timeUnitComboBox.FormattingEnabled = true;
+            this.timeUnitComboBox.Items.AddRange(new object[] {
+            "Seconds",
+            "Minutes",
+            "Hours"});
+            this.timeUnitComboBox.Location = new System.Drawing.Point(220, 204);
+            this.timeUnitComboBox.Name = "timeUnitComboBox";
+            this.timeUnitComboBox.Size = new System.Drawing.Size(120, 30);
+            this.timeUnitComboBox.TabIndex = 41;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label8.Location = new System.Drawing.Point(26, 207);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(43, 22);
+            this.label8.TabIndex = 42;
+            this.label8.Text = "Last";
+            // 
+            // fromDateTime
+            // 
+            this.fromDateTime.Enabled = false;
+            this.fromDateTime.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.fromDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.fromDateTime.Location = new System.Drawing.Point(90, 258);
+            this.fromDateTime.Name = "fromDateTime";
+            this.fromDateTime.Size = new System.Drawing.Size(250, 30);
+            this.fromDateTime.TabIndex = 43;
+            // 
+            // toDateTime
+            // 
+            this.toDateTime.Enabled = false;
+            this.toDateTime.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.toDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.toDateTime.Location = new System.Drawing.Point(90, 294);
+            this.toDateTime.Name = "toDateTime";
+            this.toDateTime.Size = new System.Drawing.Size(250, 30);
+            this.toDateTime.TabIndex = 44;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label9.Location = new System.Drawing.Point(26, 264);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(58, 22);
+            this.label9.TabIndex = 45;
+            this.label9.Text = "From:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(26, 300);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(37, 22);
+            this.label10.TabIndex = 46;
+            this.label10.Text = "To:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1882, 853);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.toDateTime);
+            this.Controls.Add(this.fromDateTime);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.timeUnitComboBox);
+            this.Controls.Add(this.lastXNumeric);
+            this.Controls.Add(this.liveModeCheckBox);
             this.Controls.Add(this.clearTagsBtn);
             this.Controls.Add(this.removeTagBtn);
             this.Controls.Add(this.addTagBtn);
@@ -496,6 +610,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picFillingBottles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingSilos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingBottles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lastXNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -541,5 +656,13 @@
         private Button addTagBtn;
         private Button removeTagBtn;
         private Button clearTagsBtn;
+        private CheckBox liveModeCheckBox;
+        private NumericUpDown lastXNumeric;
+        private ComboBox timeUnitComboBox;
+        private Label label8;
+        private DateTimePicker fromDateTime;
+        private DateTimePicker toDateTime;
+        private Label label9;
+        private Label label10;
     }
 }
