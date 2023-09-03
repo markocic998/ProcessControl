@@ -1,12 +1,13 @@
 using Opc.UaFx.Client;
 using ScottPlot;
+using System.Drawing.Drawing2D;
 
 namespace ProcessControl
 {
     public partial class Form1 : Form
     {
         private OpcClient client;
-        private int bottleNumber = 0;
+        private int totalBottleNumber = 0;
 
         public Form1()
         {
@@ -16,7 +17,8 @@ namespace ProcessControl
 
         private void InitializePictureBoxControls()
         {
-            System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            //circle shape instead of square
+            GraphicsPath path = new GraphicsPath();
             path.AddEllipse(0, 0, picFillingSilos.Width, picFillingSilos.Height);
             picFillingSilos.Region = new Region(path);
             picStopFillingSilos.Region = new Region(path);
@@ -26,7 +28,7 @@ namespace ProcessControl
 
         private void btnConnectDisconnect_Click(object sender, EventArgs e)
         {
-            if (btnConnectDisconnect.Text == "Connect")
+            if (btnConnectDisconnect.Text == Constants.Connect)
             {
                 ConnectToOPCServer();
                 DrawPlotItemRatio();
@@ -34,7 +36,7 @@ namespace ProcessControl
             else
             {
                 DisconnectFromOPCServer();
-                ClearAllControls();
+                ResetAllControls();
             }
         }
 
@@ -45,7 +47,7 @@ namespace ProcessControl
                 string endpoint = "opc.tcp://desktop-n88p201:62640/IntegrationObjects/ServerSimulator";
                 client = new OpcClient(endpoint); //txtEndpointUrl.Text
                 client.Connect();
-                btnConnectDisconnect.Text = "Disconnect";
+                btnConnectDisconnect.Text = Constants.Disconnect;
                 LoadCurrentBottleLabel();
                 LoadTotalNumberOfBottles();
                 timer.Start();
@@ -60,8 +62,7 @@ namespace ProcessControl
         {
             try
             {
-                string tag = "ns=2;s=BottleLabel";
-                var res = client.ReadNode(tag);
+                var res = client.ReadNode(Constants.BottleLabelTag);
                 txtBottleLabel.Text = res.ToString();
             }
             catch (Exception ex)
@@ -74,10 +75,9 @@ namespace ProcessControl
         {
             try
             {
-                string tag = "ns=2;s=TotalNumberOfBottles";
-                var res = client.ReadNode(tag);
-                this.bottleNumber = int.Parse(res.ToString());
-                lblBottleNumber.Text = res.ToString();
+                string res = client.ReadNode(Constants.TotalNumberOfBottlesTag).ToString();
+                this.totalBottleNumber = int.Parse(res);
+                lblTotalBottleNumber.Text = res;
             }
             catch (Exception ex)
             {
@@ -88,7 +88,7 @@ namespace ProcessControl
         private void DrawPlotItemRatio()
         {
             double[] values = { 7, 2, 1 };
-            string[] labels = { "Water", "Color", "Flavor" };
+            string[] labels = { Constants.Water, Constants.Color, Constants.Flavor };
             Color[] colors = { Color.Blue, Color.Red, Color.Green };
             var pie = plotItemRatio.Plot.AddPie(values);
             pie.SliceLabels = labels;
@@ -108,21 +108,24 @@ namespace ProcessControl
             if (client != null)
             {
                 client.Disconnect();
-                btnConnectDisconnect.Text = "Connect";
+                btnConnectDisconnect.Text = Constants.Connect;
             }
         }
 
-        private void ClearAllControls()
+        private void ResetAllControls()
         {
             timer.Stop();
+
             plotWater.Plot.Clear();
             plotWater.Refresh();
             plotColor.Plot.Clear();
             plotColor.Refresh();
             plotFlavor.Plot.Clear();
             plotFlavor.Refresh();
+
             plotItemRatio.Plot.Clear();
             plotItemRatio.Refresh();
+
             picFillingSilos.Visible = false;
             picStopFillingSilos.Visible = false;
             picFillingBottles.Visible = false;
@@ -131,14 +134,16 @@ namespace ProcessControl
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            DrawJuiceProductionItemValue("Water");
-            DrawJuiceProductionItemValue("Color");
-            DrawJuiceProductionItemValue("Flavor");
-            DetermineStatus("FillingSilos");
-            DetermineStatus("StopFillingSilos");
-            DetermineStatus("FillingBottles");
-            DetermineStatus("StopFillingBottles");
-            DetermineBottleNumber();
+            DrawJuiceProductionItemValue(Constants.Water);
+            DrawJuiceProductionItemValue(Constants.Color);
+            DrawJuiceProductionItemValue(Constants.Flavor);
+
+            DetermineStatus(Constants.FillingSilos);
+            DetermineStatus(Constants.StopFillingSilos);
+            DetermineStatus(Constants.FillingBottles);
+            DetermineStatus(Constants.StopFillingBottles);
+
+            DetermineTotalBottleNumber();
         }
 
         private void DrawJuiceProductionItemValue(string item)
@@ -175,12 +180,12 @@ namespace ProcessControl
         {
             switch (item)
             {
-                case "Water":
-                    return "ns=2;s=Water";
-                case "Color":
-                    return "ns=2;s=Color";
+                case Constants.Water:
+                    return Constants.WaterTag;
+                case Constants.Color:
+                    return Constants.ColorTag;
                 default:
-                    return "ns=2;s=Flavor";
+                    return Constants.FlavorTag;
             }
         }
 
@@ -188,9 +193,9 @@ namespace ProcessControl
         {
             switch (item)
             {
-                case "Water":
+                case Constants.Water:
                     return plotWater;
-                case "Color":
+                case Constants.Color:
                     return plotColor;
                 default:
                     return plotFlavor;
@@ -201,9 +206,9 @@ namespace ProcessControl
         {
             switch (item)
             {
-                case "Water":
+                case Constants.Water:
                     return Color.Blue;
-                case "Color":
+                case Constants.Color:
                     return Color.Red;
                 default:
                     return Color.Green;
@@ -236,11 +241,11 @@ namespace ProcessControl
         {
             switch (statusName)
             {
-                case "FillingSilos":
+                case Constants.FillingSilos:
                     return picFillingSilos;
-                case "StopFillingSilos":
+                case Constants.StopFillingSilos:
                     return picStopFillingSilos;
-                case "FillingBottles":
+                case Constants.FillingBottles:
                     return picFillingBottles;
                 default:
                     return picStopFillingBottles;
@@ -251,14 +256,14 @@ namespace ProcessControl
         {
             switch (statusName)
             {
-                case "FillingSilos":
-                    return "ns=2;s=FillingSilos";
-                case "StopFillingSilos":
-                    return "ns=2;s=StopFillingSilos";
-                case "FillingBottles":
-                    return "ns=2;s=FillingBottles";
+                case Constants.FillingSilos:
+                    return Constants.FillingSilosTag;
+                case Constants.StopFillingSilos:
+                    return Constants.StopFillingSilosTag;
+                case Constants.FillingBottles:
+                    return Constants.FillingBottlesTag;
                 default:
-                    return "ns=2;s=StopFillingBottles";
+                    return Constants.StopFillingBottlesTag;
             }
         }
 
@@ -267,23 +272,23 @@ namespace ProcessControl
             pic.Visible = value;
         }
 
-        private void DetermineBottleNumber()
+        private void DetermineTotalBottleNumber()
         {
             try
             {
-                string tag = "ns=2;s=BottleNumber";
-                var res = client.ReadNode(tag);
+                var res = client.ReadNode(Constants.BottleNumberTag);
                 int n = int.Parse(res.ToString());
                 if (n > 0)
                 {
-                    this.bottleNumber += n;
-                    lblBottleNumber.Text = this.bottleNumber.ToString();
-                    client.WriteNode("ns=2;s=TotalNumberOfBottles", this.bottleNumber);
+                    this.totalBottleNumber += n;
+                    lblTotalBottleNumber.Text = this.totalBottleNumber.ToString();
+                    client.WriteNode(Constants.TotalNumberOfBottlesTag, this.totalBottleNumber);
                 }
             }
             catch
             {
-                lblBottleNumber.Text = "NaN";
+                lblServerError.Visible = true;
+                lblTotalBottleNumber.Text = "NaN";
             }
         }
 
@@ -291,7 +296,7 @@ namespace ProcessControl
         {
             if (client != null)
             {
-                client.WriteNode("ns=2;s=BottleLabel", txtBottleLabel.Text);
+                client.WriteNode(Constants.BottleLabelTag, txtBottleLabel.Text);
                 MessageBox.Show(txtBottleLabel.Text + " as a new bottle label is set.");
             }
             else

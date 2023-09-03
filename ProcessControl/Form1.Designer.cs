@@ -58,7 +58,7 @@
             this.lblStopFillingBottles = new System.Windows.Forms.Label();
             this.picStopFillingBottles = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.lblBottleNumber = new System.Windows.Forms.Label();
+            this.lblTotalBottleNumber = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtBottleLabel = new System.Windows.Forms.TextBox();
             this.btnBottleLabel = new System.Windows.Forms.Button();
@@ -327,15 +327,15 @@
             this.label6.TabIndex = 28;
             this.label6.Text = "Total number of monitored filled bottles:";
             // 
-            // lblBottleNumber
+            // lblTotalBottleNumber
             // 
-            this.lblBottleNumber.AutoSize = true;
-            this.lblBottleNumber.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblBottleNumber.Location = new System.Drawing.Point(1207, 624);
-            this.lblBottleNumber.Name = "lblBottleNumber";
-            this.lblBottleNumber.Size = new System.Drawing.Size(23, 26);
-            this.lblBottleNumber.TabIndex = 29;
-            this.lblBottleNumber.Text = "0";
+            this.lblTotalBottleNumber.AutoSize = true;
+            this.lblTotalBottleNumber.Font = new System.Drawing.Font("Times New Roman", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblTotalBottleNumber.Location = new System.Drawing.Point(1207, 624);
+            this.lblTotalBottleNumber.Name = "lblTotalBottleNumber";
+            this.lblTotalBottleNumber.Size = new System.Drawing.Size(23, 26);
+            this.lblTotalBottleNumber.TabIndex = 29;
+            this.lblTotalBottleNumber.Text = "0";
             // 
             // label7
             // 
@@ -362,7 +362,7 @@
             this.btnBottleLabel.Name = "btnBottleLabel";
             this.btnBottleLabel.Size = new System.Drawing.Size(121, 34);
             this.btnBottleLabel.TabIndex = 32;
-            this.btnBottleLabel.Text = "Apply";
+            this.btnBottleLabel.Text = "Set";
             this.btnBottleLabel.UseVisualStyleBackColor = true;
             this.btnBottleLabel.Click += new System.EventHandler(this.btnBottleLabel_Click);
             // 
@@ -374,7 +374,7 @@
             this.Controls.Add(this.btnBottleLabel);
             this.Controls.Add(this.txtBottleLabel);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.lblBottleNumber);
+            this.Controls.Add(this.lblTotalBottleNumber);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.lblStopFillingBottles);
             this.Controls.Add(this.picStopFillingBottles);
@@ -451,7 +451,7 @@
         private Label lblStopFillingBottles;
         private PictureBox picStopFillingBottles;
         private Label label6;
-        private Label lblBottleNumber;
+        private Label lblTotalBottleNumber;
         private Label label7;
         private TextBox txtBottleLabel;
         private Button btnBottleLabel;
