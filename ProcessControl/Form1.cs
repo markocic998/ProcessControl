@@ -123,6 +123,7 @@ namespace ProcessControl
             if (client != null)
             {
                 client.Disconnect();
+                client = null;
                 btnConnectDisconnect.Text = Constants.Connect;
             }
         }
