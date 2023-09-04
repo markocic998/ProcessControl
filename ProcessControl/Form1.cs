@@ -21,8 +21,8 @@ namespace ProcessControl
         private void InitializeControls()
         {
             timeUnitComboBox.SelectedIndex = 0;
-            fromDateTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
-            toDateTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
+            fromDateTime.CustomFormat = Constants.DateTimeFormat;
+            toDateTime.CustomFormat = Constants.DateTimeFormat;
         }
 
         private void InitializePictureBoxControls()
@@ -41,7 +41,6 @@ namespace ProcessControl
             if (btnConnectDisconnect.Text == Constants.Connect)
             {
                 ConnectToOPCServer();
-                DrawPlotItemRatio();
             }
             else
             {
@@ -54,12 +53,18 @@ namespace ProcessControl
         {
             try
             {
-                string endpoint = "opc.tcp://desktop-n88p201:62640/IntegrationObjects/ServerSimulator";
-                client = new OpcClient(endpoint); //txtEndpointUrl.Text
+                string endpoint = txtEndpointUrl.Text;
+                if (endpoint == "")
+                {
+                    endpoint = "opc.tcp://desktop-n88p201:62640/IntegrationObjects/ServerSimulator";
+                }
+                client = new OpcClient(endpoint);
                 client.Connect();
                 btnConnectDisconnect.Text = Constants.Disconnect;
+                DrawPlotItemRatio();
                 LoadCurrentBottleLabel();
                 LoadTotalNumberOfBottles();
+                DrawLogs();
                 timer.Start();
             }
             catch (Exception e)
@@ -227,8 +232,16 @@ namespace ProcessControl
                     return Color.Blue;
                 case Constants.Color:
                     return Color.Red;
-                default:
+                case Constants.Flavor:
                     return Color.Green;
+                case Constants.BottleNumber:
+                    return Color.DarkCyan;
+                case Constants.TotalNumberOfBottles:
+                    return Color.Purple;
+                case Constants.Temperature:
+                    return Color.Orange;
+                default:
+                    return Color.Black;
             }
         }
 
@@ -311,8 +324,14 @@ namespace ProcessControl
 
         private void DrawLogs()
         {
+            if (client == null)
+            {
+                return;
+            }
             mainPlot.Plot.Clear();
-            var logs = client.ReadNodesHistory(CalculateStartTime(), DateTime.UtcNow, nodeIds: DetermineNodeIds());
+            DateTime start = DetermineStartDateTime();
+            DateTime end = DetermineEndDateTime();
+            var logs = client.ReadNodesHistory(start, end, nodeIds: DetermineNodeIds());
 
             foreach (var log in logs)
             {
@@ -328,14 +347,42 @@ namespace ProcessControl
                 }
                 if (timestamps.Count > 0)
                 {
-                    mainPlot.Plot.AddScatter(timestamps.ToArray(), values.ToArray(), label: ResolveNameFromHistoricalTag(log.Key.ToString()));
+                    string label = ResolveNameFromHistoricalTag(log.Key.ToString());
+                    Color color = ResolveItemColor(label);
+                    var scatter = mainPlot.Plot.AddScatter(timestamps.ToArray(), values.ToArray(), label: label, color: color);
+                    scatter.MarkerSize = 3;
                 }
             }
 
             mainPlot.Plot.XAxis.DateTimeFormat(true);
-            mainPlot.Plot.Legend();
+            var legend = mainPlot.Plot.Legend();
+            legend.Location = Alignment.UpperLeft;
             mainPlot.Plot.AxisAuto();
             mainPlot.Refresh();
+        }
+
+        private DateTime DetermineStartDateTime()
+        {
+            if (liveModeCheckBox.Checked)
+            {
+                return CalculateStartTime();
+            }
+            else
+            {
+                return fromDateTime.Value.AddHours(-Constants.TimeZoneDifference);
+            }
+        }
+
+        private DateTime DetermineEndDateTime()
+        {
+            if (liveModeCheckBox.Checked)
+            {
+                return DateTime.UtcNow;
+            }
+            else
+            {
+                return toDateTime.Value.AddHours(-Constants.TimeZoneDifference);
+            }
         }
 
         private DateTime CalculateStartTime()
@@ -385,6 +432,7 @@ namespace ProcessControl
             {
                 tagsListBox.Items.Clear();
                 tagList.Clear();
+                DrawLogs();
             }
             else
             {
@@ -399,6 +447,7 @@ namespace ProcessControl
                 string itemToRemove = tagsListBox.SelectedItem.ToString();
                 tagsListBox.Items.Remove(itemToRemove);
                 tagList.Remove(ResolveHistoricalTag(itemToRemove));
+                DrawLogs();
             }
             else
             {
@@ -412,6 +461,7 @@ namespace ProcessControl
             {
                 tagsListBox.Items.Add(tagComboBox.SelectedItem);
                 tagList.Add(ResolveHistoricalTag((string)tagComboBox.SelectedItem));
+                DrawLogs();
             }
             else
             {
@@ -485,6 +535,63 @@ namespace ProcessControl
                 lastXNumeric.Enabled = false;
                 timeUnitComboBox.Enabled = false;
             }
+            DrawLogs();
+        }
+
+        private void fromDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            DrawLogs();
+        }
+
+        private void toDateTime_ValueChanged(object sender, EventArgs e)
+        {
+            DrawLogs();
+        }
+
+        private void statisticsBtn_Click(object sender, EventArgs e)
+        {
+            if (tagsListBox.SelectedItems.Count > 0 && client != null)
+            {
+                string item = tagsListBox.SelectedItem.ToString();
+                string tag = ResolveHistoricalTag(item);
+                MessageBox.Show($"Statistic of {item} log:\n" + GetStatistics(tag));
+            }
+            else
+            {
+                MessageBox.Show("There is no selected item or there is no connection to the OPC server.");
+            }
+        }
+
+        private string GetStatistics(string tag)
+        {
+            string statistics = "";
+            DateTime startTime = DetermineStartDateTime();
+            DateTime endTime = DetermineEndDateTime();
+            var minimum = client.ReadNodeHistoryProcessed(startTime, endTime, OpcAggregateType.Minimum, tag);
+            foreach (var min in minimum)
+            { 
+                if (min.Value != null)
+                {
+                    statistics += $"minimum: {min.Value}\n";
+                }
+            }
+            var maximum = client.ReadNodeHistoryProcessed(startTime, endTime, OpcAggregateType.Maximum, tag);
+            foreach (var max in maximum)
+            {
+                if (max.Value != null)
+                {
+                    statistics += $"maximum: {max.Value}\n";
+                }
+            }
+            var average = client.ReadNodeHistoryProcessed(startTime, endTime, OpcAggregateType.Average, tag);
+            foreach (var avg in average)
+            {
+                if (avg.Value != null)
+                {
+                    statistics += $"average: {avg.Value}\n";
+                }
+            }
+            return statistics;
         }
     }
 }

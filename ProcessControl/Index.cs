@@ -8,6 +8,8 @@
         public const string Minutes = "Minutes";
         public const string Hours = "Hours";
 
+        public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+
         public const string Connect = "Connect";
         public const string Disconnect = "Disconnect";
 

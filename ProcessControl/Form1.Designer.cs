@@ -76,6 +76,7 @@
             this.toDateTime = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.statisticsBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.waterSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flavorSilosPictureBox)).BeginInit();
@@ -151,9 +152,10 @@
             // 
             // btnConnectDisconnect
             // 
-            this.btnConnectDisconnect.Location = new System.Drawing.Point(657, 19);
+            this.btnConnectDisconnect.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnConnectDisconnect.Location = new System.Drawing.Point(981, 19);
             this.btnConnectDisconnect.Name = "btnConnectDisconnect";
-            this.btnConnectDisconnect.Size = new System.Drawing.Size(94, 29);
+            this.btnConnectDisconnect.Size = new System.Drawing.Size(134, 29);
             this.btnConnectDisconnect.TabIndex = 7;
             this.btnConnectDisconnect.Text = "Connect";
             this.btnConnectDisconnect.UseVisualStyleBackColor = true;
@@ -161,17 +163,19 @@
             // 
             // txtEndpointUrl
             // 
-            this.txtEndpointUrl.Location = new System.Drawing.Point(165, 20);
+            this.txtEndpointUrl.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtEndpointUrl.Location = new System.Drawing.Point(220, 18);
             this.txtEndpointUrl.Name = "txtEndpointUrl";
-            this.txtEndpointUrl.Size = new System.Drawing.Size(486, 27);
+            this.txtEndpointUrl.Size = new System.Drawing.Size(755, 30);
             this.txtEndpointUrl.TabIndex = 8;
             // 
             // lblEndpointUrl
             // 
             this.lblEndpointUrl.AutoSize = true;
-            this.lblEndpointUrl.Location = new System.Drawing.Point(12, 23);
+            this.lblEndpointUrl.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblEndpointUrl.Location = new System.Drawing.Point(26, 22);
             this.lblEndpointUrl.Name = "lblEndpointUrl";
-            this.lblEndpointUrl.Size = new System.Drawing.Size(147, 20);
+            this.lblEndpointUrl.Size = new System.Drawing.Size(187, 22);
             this.lblEndpointUrl.TabIndex = 9;
             this.lblEndpointUrl.Text = "Server Endpoint URL:";
             // 
@@ -192,7 +196,7 @@
             // 
             this.lblJuiceProduction.AutoSize = true;
             this.lblJuiceProduction.Font = new System.Drawing.Font("Times New Roman", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblJuiceProduction.Location = new System.Drawing.Point(844, 68);
+            this.lblJuiceProduction.Location = new System.Drawing.Point(866, 76);
             this.lblJuiceProduction.Name = "lblJuiceProduction";
             this.lblJuiceProduction.Size = new System.Drawing.Size(234, 37);
             this.lblJuiceProduction.TabIndex = 11;
@@ -384,10 +388,10 @@
             // mainPlot
             // 
             this.mainPlot.AccessibleRole = System.Windows.Forms.AccessibleRole.Sound;
-            this.mainPlot.Location = new System.Drawing.Point(-2, 333);
+            this.mainPlot.Location = new System.Drawing.Point(-2, 340);
             this.mainPlot.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.mainPlot.Name = "mainPlot";
-            this.mainPlot.Size = new System.Drawing.Size(860, 521);
+            this.mainPlot.Size = new System.Drawing.Size(860, 514);
             this.mainPlot.TabIndex = 33;
             // 
             // tagsListBox
@@ -395,9 +399,9 @@
             this.tagsListBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tagsListBox.FormattingEnabled = true;
             this.tagsListBox.ItemHeight = 22;
-            this.tagsListBox.Location = new System.Drawing.Point(376, 168);
+            this.tagsListBox.Location = new System.Drawing.Point(364, 164);
             this.tagsListBox.Name = "tagsListBox";
-            this.tagsListBox.Size = new System.Drawing.Size(228, 158);
+            this.tagsListBox.Size = new System.Drawing.Size(241, 158);
             this.tagsListBox.TabIndex = 34;
             // 
             // tagComboBox
@@ -412,7 +416,7 @@
             "BottleNumber",
             "TotalNumberOfBottles",
             "Temperature"});
-            this.tagComboBox.Location = new System.Drawing.Point(610, 168);
+            this.tagComboBox.Location = new System.Drawing.Point(611, 164);
             this.tagComboBox.Name = "tagComboBox";
             this.tagComboBox.Size = new System.Drawing.Size(228, 30);
             this.tagComboBox.TabIndex = 35;
@@ -420,7 +424,7 @@
             // addTagBtn
             // 
             this.addTagBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.addTagBtn.Location = new System.Drawing.Point(610, 204);
+            this.addTagBtn.Location = new System.Drawing.Point(611, 200);
             this.addTagBtn.Name = "addTagBtn";
             this.addTagBtn.Size = new System.Drawing.Size(228, 29);
             this.addTagBtn.TabIndex = 36;
@@ -431,7 +435,7 @@
             // removeTagBtn
             // 
             this.removeTagBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.removeTagBtn.Location = new System.Drawing.Point(610, 262);
+            this.removeTagBtn.Location = new System.Drawing.Point(611, 258);
             this.removeTagBtn.Name = "removeTagBtn";
             this.removeTagBtn.Size = new System.Drawing.Size(228, 29);
             this.removeTagBtn.TabIndex = 37;
@@ -442,7 +446,7 @@
             // clearTagsBtn
             // 
             this.clearTagsBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.clearTagsBtn.Location = new System.Drawing.Point(610, 297);
+            this.clearTagsBtn.Location = new System.Drawing.Point(611, 293);
             this.clearTagsBtn.Name = "clearTagsBtn";
             this.clearTagsBtn.Size = new System.Drawing.Size(228, 29);
             this.clearTagsBtn.TabIndex = 38;
@@ -515,6 +519,7 @@
             this.fromDateTime.Name = "fromDateTime";
             this.fromDateTime.Size = new System.Drawing.Size(250, 30);
             this.fromDateTime.TabIndex = 43;
+            this.fromDateTime.ValueChanged += new System.EventHandler(this.fromDateTime_ValueChanged);
             // 
             // toDateTime
             // 
@@ -525,6 +530,7 @@
             this.toDateTime.Name = "toDateTime";
             this.toDateTime.Size = new System.Drawing.Size(250, 30);
             this.toDateTime.TabIndex = 44;
+            this.toDateTime.ValueChanged += new System.EventHandler(this.toDateTime_ValueChanged);
             // 
             // label9
             // 
@@ -546,11 +552,23 @@
             this.label10.TabIndex = 46;
             this.label10.Text = "To:";
             // 
+            // statisticsBtn
+            // 
+            this.statisticsBtn.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.statisticsBtn.Location = new System.Drawing.Point(364, 328);
+            this.statisticsBtn.Name = "statisticsBtn";
+            this.statisticsBtn.Size = new System.Drawing.Size(241, 29);
+            this.statisticsBtn.TabIndex = 47;
+            this.statisticsBtn.Text = "Read period time statistics";
+            this.statisticsBtn.UseVisualStyleBackColor = true;
+            this.statisticsBtn.Click += new System.EventHandler(this.statisticsBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1882, 853);
+            this.Controls.Add(this.statisticsBtn);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.toDateTime);
@@ -664,5 +682,6 @@
         private DateTimePicker toDateTime;
         private Label label9;
         private Label label10;
+        private Button statisticsBtn;
     }
 }
