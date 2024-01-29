@@ -54,10 +54,10 @@ namespace ProcessControl
             try
             {
                 string endpoint = txtEndpointUrl.Text;
-                if (endpoint == "")
+                /*if (endpoint == "")
                 {
                     endpoint = "opc.tcp://desktop-n88p201:62640/IntegrationObjects/ServerSimulator";
-                }
+                }*/
                 client = new OpcClient(endpoint);
                 client.Connect();
                 btnConnectDisconnect.Text = Constants.Disconnect;
