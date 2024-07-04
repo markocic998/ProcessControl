@@ -528,6 +528,8 @@ namespace ProcessControl
                 toDateTime.Enabled = false;
                 lastXNumeric.Enabled = true;
                 timeUnitComboBox.Enabled = true;
+                forecastValuesCheckBox.Enabled= true;
+                horizonNumeric.Enabled= true;
             }
             else
             {
@@ -535,6 +537,8 @@ namespace ProcessControl
                 toDateTime.Enabled = true;
                 lastXNumeric.Enabled = false;
                 timeUnitComboBox.Enabled = false;
+                forecastValuesCheckBox.Enabled = false;
+                horizonNumeric.Enabled = false;
             }
             DrawLogs();
         }
