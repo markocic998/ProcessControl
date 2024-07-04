@@ -77,6 +77,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.statisticsBtn = new System.Windows.Forms.Button();
+            this.forecastValuesCheckBox = new System.Windows.Forms.CheckBox();
+            this.horizonNumeric = new System.Windows.Forms.NumericUpDown();
+            this.lblFutureValues = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.waterSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSilosPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flavorSilosPictureBox)).BeginInit();
@@ -86,6 +89,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingSilos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingBottles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lastXNumeric)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizonNumeric)).BeginInit();
             this.SuspendLayout();
             // 
             // waterSilosPictureBox
@@ -515,7 +519,7 @@
             this.fromDateTime.Enabled = false;
             this.fromDateTime.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.fromDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.fromDateTime.Location = new System.Drawing.Point(90, 258);
+            this.fromDateTime.Location = new System.Drawing.Point(90, 280);
             this.fromDateTime.Name = "fromDateTime";
             this.fromDateTime.Size = new System.Drawing.Size(250, 30);
             this.fromDateTime.TabIndex = 43;
@@ -526,7 +530,7 @@
             this.toDateTime.Enabled = false;
             this.toDateTime.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.toDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.toDateTime.Location = new System.Drawing.Point(90, 294);
+            this.toDateTime.Location = new System.Drawing.Point(90, 316);
             this.toDateTime.Name = "toDateTime";
             this.toDateTime.Size = new System.Drawing.Size(250, 30);
             this.toDateTime.TabIndex = 44;
@@ -536,7 +540,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(26, 264);
+            this.label9.Location = new System.Drawing.Point(26, 286);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(58, 22);
             this.label9.TabIndex = 45;
@@ -546,7 +550,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label10.Location = new System.Drawing.Point(26, 300);
+            this.label10.Location = new System.Drawing.Point(26, 322);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(37, 22);
             this.label10.TabIndex = 46;
@@ -563,6 +567,51 @@
             this.statisticsBtn.UseVisualStyleBackColor = true;
             this.statisticsBtn.Click += new System.EventHandler(this.statisticsBtn_Click);
             // 
+            // forecastValuesCheckBox
+            // 
+            this.forecastValuesCheckBox.AutoSize = true;
+            this.forecastValuesCheckBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.forecastValuesCheckBox.Location = new System.Drawing.Point(26, 240);
+            this.forecastValuesCheckBox.Name = "forecastValuesCheckBox";
+            this.forecastValuesCheckBox.Size = new System.Drawing.Size(100, 26);
+            this.forecastValuesCheckBox.TabIndex = 39;
+            this.forecastValuesCheckBox.Text = "Forecast";
+            this.forecastValuesCheckBox.UseVisualStyleBackColor = true;
+            this.forecastValuesCheckBox.CheckedChanged += new System.EventHandler(this.liveModeCheckBox_CheckedChanged);
+            // 
+            // horizonNumeric
+            // 
+            this.horizonNumeric.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.horizonNumeric.Location = new System.Drawing.Point(132, 239);
+            this.horizonNumeric.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.horizonNumeric.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.horizonNumeric.Name = "horizonNumeric";
+            this.horizonNumeric.Size = new System.Drawing.Size(60, 30);
+            this.horizonNumeric.TabIndex = 40;
+            this.horizonNumeric.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            // 
+            // lblFutureValues
+            // 
+            this.lblFutureValues.AutoSize = true;
+            this.lblFutureValues.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblFutureValues.Location = new System.Drawing.Point(210, 241);
+            this.lblFutureValues.Name = "lblFutureValues";
+            this.lblFutureValues.Size = new System.Drawing.Size(111, 22);
+            this.lblFutureValues.TabIndex = 20;
+            this.lblFutureValues.Text = "future values";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -575,7 +624,9 @@
             this.Controls.Add(this.fromDateTime);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.timeUnitComboBox);
+            this.Controls.Add(this.horizonNumeric);
             this.Controls.Add(this.lastXNumeric);
+            this.Controls.Add(this.forecastValuesCheckBox);
             this.Controls.Add(this.liveModeCheckBox);
             this.Controls.Add(this.clearTagsBtn);
             this.Controls.Add(this.removeTagBtn);
@@ -595,6 +646,7 @@
             this.Controls.Add(this.lblFillingBottles);
             this.Controls.Add(this.picFillingBottles);
             this.Controls.Add(this.bottlePictureBox);
+            this.Controls.Add(this.lblFutureValues);
             this.Controls.Add(this.lblFillingSilos);
             this.Controls.Add(this.picFillingSilos);
             this.Controls.Add(this.plotItemRatio);
@@ -629,6 +681,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingSilos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStopFillingBottles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lastXNumeric)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.horizonNumeric)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -683,5 +736,8 @@
         private Label label9;
         private Label label10;
         private Button statisticsBtn;
+        private CheckBox forecastValuesCheckBox;
+        private NumericUpDown horizonNumeric;
+        private Label lblFutureValues;
     }
 }
