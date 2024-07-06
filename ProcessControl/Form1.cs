@@ -352,6 +352,11 @@ namespace ProcessControl
                     Color color = ResolveItemColor(label);
                     var scatter = mainPlot.Plot.AddScatter(timestamps.ToArray(), values.ToArray(), label: label, color: color);
                     scatter.MarkerSize = 3;
+                    if (ShouldForecastValues(label))
+                    {
+                        DateTime startForecastDateTime = log.Value.Last().Timestamp.AddHours(Constants.TimeZoneDifference).AddSeconds(1);
+                        DrawForecastLog(label, values.Last(), timestamps.Last(), startForecastDateTime);
+                    }
                 }
             }
 
@@ -412,6 +417,24 @@ namespace ProcessControl
                 nodeIds[i] = tagList[i];
             }
             return nodeIds;
+        }
+
+        private bool ShouldForecastValues(string logName)
+        {
+            return logName == Constants.Temperature && liveModeCheckBox.Checked && forecastValuesCheckBox.Checked;
+        }
+
+        private void DrawForecastLog(string logName, double lastValue, double lastTimestamp, DateTime startForecastDateTime)
+        {
+            List<double> forecastValues = new List<double>() { lastValue };
+            List<double> forecastTimestamps = new List<double>() { lastTimestamp };
+            for (int i = 0; i < horizonNumeric.Value; i++)
+            {
+                forecastValues.Add(80);
+                forecastTimestamps.Add(startForecastDateTime.AddSeconds(i).ToOADate());
+            }
+            var forecastScatter = mainPlot.Plot.AddScatter(forecastTimestamps.ToArray(), forecastValues.ToArray(), label: logName, color: Color.FromArgb(100, Color.Orange));
+            forecastScatter.MarkerSize = 3;
         }
 
         private void btnBottleLabel_Click(object sender, EventArgs e)
