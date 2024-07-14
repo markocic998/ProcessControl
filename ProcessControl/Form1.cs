@@ -238,9 +238,9 @@ namespace ProcessControl
                 case Constants.BottleNumber:
                     return Color.DarkCyan;
                 case Constants.TotalNumberOfBottles:
-                    return Color.Purple;
-                case Constants.Temperature:
                     return Color.Orange;
+                case Constants.Temperature:
+                    return Color.Purple;
                 default:
                     return Color.Black;
             }
@@ -433,7 +433,7 @@ namespace ProcessControl
                 forecastValues.Add(80);
                 forecastTimestamps.Add(startForecastDateTime.AddSeconds(i).ToOADate());
             }
-            var forecastScatter = mainPlot.Plot.AddScatter(forecastTimestamps.ToArray(), forecastValues.ToArray(), label: logName, color: Color.FromArgb(100, Color.Orange));
+            var forecastScatter = mainPlot.Plot.AddScatter(forecastTimestamps.ToArray(), forecastValues.ToArray(), label: logName, color: Color.FromArgb(100, Color.Purple));
             forecastScatter.MarkerSize = 3;
         }
 
