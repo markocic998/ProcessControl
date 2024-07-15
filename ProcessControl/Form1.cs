@@ -2,6 +2,7 @@ using Opc.UaFx;
 using Opc.UaFx.Client;
 using ScottPlot;
 using System.Drawing.Drawing2D;
+using static ProcessControl.ValuePredictor;
 
 namespace ProcessControl
 {
@@ -428,9 +429,12 @@ namespace ProcessControl
         {
             List<double> forecastValues = new List<double>() { lastValue };
             List<double> forecastTimestamps = new List<double>() { lastTimestamp };
+            ModelInput input = new ModelInput();
+            input.Col0 = (float)lastValue;
+            ModelOutput output = ValuePredictor.Predict(input, horizon: (int)horizonNumeric.Value);
+            forecastValues.AddRange(output.Col0.Select(value => (double)value));
             for (int i = 0; i < horizonNumeric.Value; i++)
             {
-                forecastValues.Add(80);
                 forecastTimestamps.Add(startForecastDateTime.AddSeconds(i).ToOADate());
             }
             var forecastScatter = mainPlot.Plot.AddScatter(forecastTimestamps.ToArray(), forecastValues.ToArray(), label: logName, color: Color.FromArgb(100, Color.Purple));
